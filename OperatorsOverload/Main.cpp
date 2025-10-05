@@ -19,7 +19,19 @@ int main(int argc, char** argv)
 
 	cout << "--- Operations ---" << endl;
 	Array<int> rez = arr1 + arr2;
-	cout << "Sum: ";
+	cout << "Plus #1: ";
+	cout << rez;
+	cout << endl;
+	cout << "Plus-equal: ";
+	arr1 += 5;
+	cout << arr1;
+	cout << endl;
+	cout << "Minus-equal: ";
+	arr2 -= 2;
+	cout << arr2;
+	cout << endl;
+	cout << "Plus #2: ";
+	rez = arr1 + 5;
 	cout << rez;
 	cout << endl;
 

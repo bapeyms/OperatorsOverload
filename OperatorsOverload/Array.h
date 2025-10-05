@@ -49,7 +49,9 @@ public:
 		return index >= 0 && index < size ? ptr[index] : ptr[0];
 	}
 	Array operator+(const Array<T>& obj);
-	Array& operator+=(Array<T> obj);
+	Array operator+(int number);
+	Array& operator+=(int number);
+	Array& operator-=(int number);
 
 	static int GetInstanceCount()
 	{
@@ -109,11 +111,65 @@ inline Array<T> Array<T>::operator+(const Array<T>& obj)
 }
 
 template<typename T>
-inline Array<T>& Array<T>::operator+=(Array<T> obj)
+inline Array<T> Array<T>::operator+(int number)
 {
-	// TODO: insert return statement here
+	int newSize = size + number;
+	Array<T> newArr(newSize);
+	for (int i = 0; i < this->size; i++)
+	{
+		newArr.ptr[i] = this->ptr[i];
+	}
+	for (int i = this->size; i < newSize; i++)
+	{
+		newArr.ptr[i] = 0;
+	}
+	return newArr;
 }
 
+template<typename T>
+inline Array<T>& Array<T>::operator+=(int number)
+{
+	int newSize = size + number;
+	T* newArr = new T[newSize];
+	for (int i = 0; i < size; i++)
+	{
+		newArr[i] = ptr[i];
+	}
+	for (int i = size; i < newSize; i++)
+	{
+		newArr[i] = 0;
+	}
+	delete[] ptr;
+	ptr = newArr;
+	size = newSize;
+	return *this;
+}
+
+template<typename T>
+inline Array<T>& Array<T>::operator-=(int number)
+{
+	if (number < 0)
+	{
+		return (*this += (-number));
+	}
+	if (number >= size)
+	{
+		delete[] ptr;
+		ptr = new T[1];
+		size = 1;
+		return *this;
+	}
+	int newSize = size - number;
+	T* newArr = new T[newSize];
+	for (int i = 0; i < newSize; i++)
+	{
+		newArr[i] = ptr[i];
+	}
+	delete[] ptr;
+	ptr = newArr;
+	size = newSize;
+	return *this;
+}
 
 template <typename T>
 Array<T>::Array(const Array<T>& obj)
